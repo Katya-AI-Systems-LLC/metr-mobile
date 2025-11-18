@@ -1,0 +1,215 @@
+workflows:
+  metr-dev-ci:
+    name: METR Dev CI (Android & iOS)
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    environment:
+      node: 18
+      xcode: 15.0
+      
+      # Группы с секретами и сертификатами задаются в Codemagic UI
+      # ios-signing: профили и сертификаты для iOS
+      # android-signing: keystore и пароли для Android
+      groups:
+        - ios-signing
+        - android-signing
+
+      vars:
+        # Укажи реальные значения workspace/scheme из Xcode
+        XCODE_WORKSPACE: "YourWorkspace.xcworkspace"  # e.g. "Mattermost.xcworkspace"
+        XCODE_SCHEME: "YourScheme"                    # e.g. "Mattermost"
+
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: develop
+          include: true
+          source: true
+        - pattern: main
+          include: true
+          source: true
+
+    cache:
+      cache_paths:
+        - $HOME/.npm
+        - $HOME/Library/Caches/CocoaPods
+        - android/.gradle
+
+    scripts:
+      - name: Install Node dependencies
+        script: |
+          npm install
+
+      - name: Run linters and typecheck
+        script: |
+          npm run lint
+          npm run tsc
+
+      - name: Run unit tests
+        script: |
+          npm test
+
+      - name: Set up Android local.properties
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+
+      - name: Build Android debug APK
+        script: |
+          cd android
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Install CocoaPods dependencies
+        script: |
+          cd ios
+          pod install
+
+      - name: Build iOS debug (unsigned IPA)
+        script: |
+          xcode-project build-ipa \
+            --workspace "ios/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME" \
+            --configuration Debug \
+            --skip_codesign
+
+    artifacts:
+      - android/app/build/outputs/**/*.apk
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+
+    publishing:
+      email:
+        recipients:
+          - dev-team@metr.local
+        notify:
+          success: true
+          failure: true
+
+  metr-android-release:
+    name: METR Android Release
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    environment:
+      node: 18
+      
+      groups:
+        - android-signing        # CM_KEYSTORE, CM_KEYSTORE_PASSWORD, CM_KEY_PASSWORD, CM_KEY_ALIAS
+        - google-play            # GOOGLE_PLAY_CREDENTIALS или аналогичный секрет
+
+      vars:
+        ANDROID_PACKAGE_NAME: "com.yourcompany.metr"  # замени на реальный applicationId
+
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: "v*"
+          include: true
+
+    cache:
+      cache_paths:
+        - $HOME/.npm
+        - android/.gradle
+
+    scripts:
+      - name: Install Node dependencies
+        script: |
+          npm install
+
+      - name: Set up Android local.properties
+        script: |
+          echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
+
+      - name: Build Android release bundle (.aab)
+        script: |
+          cd android
+          ./gradlew bundleRelease --no-daemon
+
+    artifacts:
+      - android/app/build/outputs/**/*.aab
+      - android/app/build/outputs/**/*.apk
+
+    publishing:
+      email:
+        recipients:
+          - releases@metr.local
+        notify:
+          success: true
+          failure: true
+
+      google_play:
+        # В Codemagic UI создай env var GOOGLE_PLAY_CONFIG со значением JSON cred файла
+        credentials: $GOOGLE_PLAY_CONFIG
+        track: internal
+
+  metr-ios-release:
+    name: METR iOS Release
+    max_build_duration: 120
+    instance_type: mac_mini_m2
+
+    environment:
+      node: 18
+      xcode: 15.0
+
+      groups:
+        - ios-signing              # сертификат, provisioning profiles
+        - app-store-connect        # APP_STORE_CONNECT_API_KEY, APP_STORE_CONNECT_KEY_ID, APP_STORE_CONNECT_ISSUER_ID
+
+      vars:
+        XCODE_WORKSPACE: "YourWorkspace.xcworkspace"
+        XCODE_SCHEME: "YourScheme"
+        BUNDLE_ID: "io.yourcompany.metr"   # замени на реальный bundle id
+
+    triggering:
+      events:
+        - tag
+      tag_patterns:
+        - pattern: "ios-*"
+          include: true
+
+    cache:
+      cache_paths:
+        - $HOME/.npm
+        - $HOME/Library/Caches/CocoaPods
+
+    scripts:
+      - name: Install Node dependencies
+        script: |
+          npm install
+
+      - name: Install CocoaPods dependencies
+        script: |
+          cd ios
+          pod install
+
+      - name: Build signed IPA for App Store / TestFlight
+        script: |
+          xcode-project use-profiles
+          xcode-project build-ipa \
+            --workspace "ios/$XCODE_WORKSPACE" \
+            --scheme "$XCODE_SCHEME"
+
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
+
+    publishing:
+      email:
+        recipients:
+          - releases@metr.local
+        notify:
+          success: true
+          failure: true
+
+      app_store_connect:
+        api_key: $APP_STORE_CONNECT_API_KEY
+        key_id: $APP_STORE_CONNECT_KEY_ID
+        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        submit_to_app_store: false
+        submit_to_testflight: true
+
+      # Дополнительно можно включить Slack / Teams уведомления через webhooks

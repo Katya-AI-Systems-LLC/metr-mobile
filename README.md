@@ -1,72 +1,124 @@
-# Mattermost Mobile v2
+# METR — Modern Enterprise Team Revolution
 
-- **Minimum Server versions:** Current ESR version (7.1.0+)
-- **Supported iOS versions:** 12.1+
-- **Supported Android versions:** 7.0+
+**"Measure Your Team's Potential"**
 
-Mattermost is an open source Slack-alternative used by thousands of companies around the world in 21 languages. Learn more at [https://about.mattermost.com](https://about.mattermost.com).
+METR — это полное переосмысление Mattermost Mobile как AI-powered платформы для продуктивности команд. Мы объединили автономных AI-агентов, Web3-механику, AR/VR коммуникацию, edge-вычисления и глубокую мобильную интеграцию в одном приложении, готовом к self-hosting и enterprise масштабам.
 
-You can download our apps from the [App Store](https://about.mattermost.com/mattermost-ios-app/) or [Google Play Store](https://about.mattermost.com/mattermost-android-app/), or [build them yourself](https://developers.mattermost.com/contribute/mobile/build-your-own/). 
+---
 
-We plan on releasing monthly updates with new features - check the [changelog](https://github.com/mattermost/mattermost-mobile/blob/master/CHANGELOG.md) for what features are currently supported! 
+## 📌 Ключевая ценность
 
-**Important:** If you self-compile the Mattermost Mobile apps you also need to deploy your own [Mattermost Push Notification Service](https://github.com/mattermost/mattermost-push-proxy/releases). 
+| Столп | Что включает |
+|-------|--------------|
+| **AI-First** | Персональные и командные ассистенты, Digital Twin, Emotion Analysis, Predictive Insights |
+| **Privacy & Security** | Zero-Knowledge Encryption, Biometric Auth, Quantum-Resistant Crypto |
+| **Web3-Ready** | NFT Achievements, DAO governance, Token economy, Blockchain Audit Trail |
+| **Metaverse-Compatible** | Spatial Audio Rooms, Virtual Offices, AR Annotations, Holographic meetings |
+| **Productivity-Focused** | Workflow Builder, OKRs, Time Tracking, Knowledge Graph, Automation Suites |
 
-# How to Contribute
+Полный список модулей и API см. в [`FINAL_IMPLEMENTATION_STATUS.md`](./FINAL_IMPLEMENTATION_STATUS.md).
 
-### Testing
+---
 
-To help with testing app updates before they're released, you can:
+## 🧭 Архитектура
 
-1. Sign up to be a beta tester
-   - [Android](https://play.google.com/apps/testing/com.mattermost.rnbeta)
-   - [iOS](https://testflight.apple.com/join/Q7Rx7K9P) - Open this link from your iOS device
-2. Install the `Mattermost Beta` app. New updates in the Beta app are released periodically. You will receive a notification when the new updates are available.
-3. File any bugs you find by filing a [GitHub issue](https://github.com/mattermost/mattermost-mobile/issues) with:
-   - Device information
-   - Repro steps
-   - Observed behavior (including screenshot / video when possible)
-   - Expected behavior
-4. (Optional) [Sign up for our team site](https://pre-release.mattermost.com/signup_user_complete/?id=f1924a8db44ff3bb41c96424cdc20676)
-   - Join the [Native Mobile Apps channel](https://pre-release.mattermost.com/core/channels/native-mobile-apps) to see what's new and discuss feedback with other contributors and the core team
-   
-You can leave the Beta testing program at any time:
-- On Android, [click this link](https://play.google.com/apps/testing/com.mattermost.rnbeta) while logged in with your Google Play email address used to opt-in for the Beta program, then click **Leave the program**. 
-- On iOS, access the `Mattermost Beta` app page in TestFlight and click **Stop Testing**.
+- **Frontend**: React Native 0.73+, Expo SDK 50 optional, Reanimated 3, RN Skia, Tailwind-подобные утилиты.
+- **AI Stack**: TensorFlow Lite, локальные модели (Whisper-tiny, BERT-tiny), OpenAI/Whisper/DALL·E коннекторы, автономные агенты.
+- **Web3 Stack**: Solidity контракты (Polygon/Ethereum), WalletConnect, IPFS, Ceramic ID.
+- **Sync & Edge**: CrossPlatformSync (handoff/clipboard), P2P mesh, Offline AI кэширование, `EdgeComputing` для распределённых задач.
+- **Security**: Hardware keystore, biometric fallback, zero-knowledge поток для чувствительных данных.
 
-### Contribute Code 
+Схемы данных и событий — в [`docs/base_configs.md`](./docs/base_configs.md) и `app/*` подпакетах.
 
-1. Look in [GitHub issues](https://mattermost.com/pl/help-wanted-mattermost-mobile) for issues marked as [Help Wanted]
-2. Comment to let people know you’re working on it
-3. Follow [these instructions](https://developers.mattermost.com/contribute/mobile/developer-setup/) to set up your developer environment
-4. Join the [Native Mobile Apps channel](https://pre-release.mattermost.com/core/channels/native-mobile-apps) on our team site to ask questions
+---
 
+## 🚀 Быстрый старт
 
+```bash
+git clone https://github.com/katya-ai-systems/metr-mobile.git
+cd metr-mobile
+npm install # или yarn
 
-# Frequently Asked Questions
+# Быстрая сборка dev окружения
+npx react-native start
+npx react-native run-ios   # или run-android
 
-### How is data handled on mobile devices after a user account is deactivated?
+# Edge/AI симуляторы
+npm run simulate:ai
+npm run simulate:web3
+```
 
-App data is wiped from the device when a user logs out of the app. If the user is logged in when the account is deactivated, then within one minute the system logs the user out, and as a result all app data is wiped from the device.
+**Минимальные версии серверов**: METR Core 1.0+ (совместим с Mattermost ESR 7.1).  
+**Поддержка платформ**: iOS 14+, Android 10+.  
+**Push**: используйте self-hosted METR Push Relay (`docs/INSTALLATION_GUIDE.md`).
 
-### I need the code for the v1 version
+---
 
-You can still access it! We have moved the code from master to the [v1 branch](https://github.com/mattermost/mattermost-mobile/tree/v1). Be aware that we will not be providing any more v1 versions or updates in the public stores.
+## 📚 Документация
 
-# Troubleshooting
+| Раздел | Файл |
+|--------|------|
+| Стратегия модернизации | [`docs/MODERNIZATION_CONCEPT_2025.md`](./docs/MODERNIZATION_CONCEPT_2025.md) |
+| Полная реализация | [`IMPLEMENTATION_COMPLETE.md`](./IMPLEMENTATION_COMPLETE.md) |
+| Ребрендинг | [`FINAL_REBRANDING_STATUS.md`](./FINAL_REBRANDING_STATUS.md) |
+| Установка и DevOps | [`INSTALLATION_GUIDE.md`](./INSTALLATION_GUIDE.md), [`ANDROID_BUILD_GUIDE.md`](./ANDROID_BUILD_GUIDE.md), [`QUICK_BUILD.md`](./QUICK_BUILD.md) |
+| Безопасность | [`SECURITY.md`](./SECURITY.md) |
+| Миграция | [`MIGRATION_TO_METR.md`](./MIGRATION_TO_METR.md) |
+| Док для Git-платформ | [`docs/GIT_PLATFORM_GUIDE.md`](./docs/GIT_PLATFORM_GUIDE.md) |
+| Лицензирование | [`LICENSE_METR.md`](./LICENSE_METR.md) + [`LICENSE.txt`](./LICENSE.txt) |
 
-### I keep getting a message "Cannot connect to the server. Please check your server URL and internet connection."
+Полный навигатор по файлам см. в [`docs/METR_DOCUMENTATION_PORTAL.md`](./docs/METR_DOCUMENTATION_PORTAL.md).
 
-This sometimes appears when there is an issue with the SSL certitificate configuration. 
+---
 
-To check that your SSL certificate is set up correctly, test the SSL certificate by visiting a site such as https://www.ssllabs.com/ssltest/index.html. If there’s an error about the missing chain or certificate path, there is likely an intermediate certificate missing that needs to be included.
+## 🧠 AI & Automation
 
-Please note that the apps cannot connect to servers with self-signed certificates, consider using [Let's Encrypt](https://docs.mattermost.com/install/config-ssl-http2-nginx.html) instead. 
+- `app/ai/PersonalAssistant.ts`: персональный ассистент с Smart Replies, расписаниями, Code Review.
+- `app/ai/TeamAssistant.ts`: командный менеджер со сводками митингов.
+- `app/ai/DigitalTwin.ts`: цифровой двойник команды (предиктивные сценарии, health-score).
+- `app/ai/MicroInteractions.ts` + `app/ui/HapticFeedback.ts`: полный UX motion kit.
 
-### I see a “Connecting…” bar that does not go away
+AI рабочие процессы определяются в `app/ai/workflows/*` и кастомизируются через Workflow Builder (см. `app/workflows/WorkflowBuilder.tsx`).
 
-If your app is working properly, you should see a grey “Connecting…” bar that clears or says “Connected” after the app reconnects. 
+---
 
-If you are seeing this message all the time, and your internet connection seems fine: 
+## 🌐 Web3 & Compliance
 
-Ask your server administrator if the server uses NGINX or another webserver as a reverse proxy. If so, they should check that it is configured correctly for [supporting the websocket connection for APIv4 endpoints](https://docs.mattermost.com/install/install-ubuntu-1604.html#configuring-nginx-as-a-proxy-for-mattermost-server). 
+- Контракты лежат в [`contracts/`](./contracts) (NFT, Governance, AuditTrail).
+- Интеграция с WalletConnect/IPFS и корпоративными кошельками описана в `app/web3/*`.
+- Лицензирование и открытые компоненты сведены в [`LICENSE_METR.md`](./LICENSE_METR.md) и `NOTICE.txt`.
+
+---
+
+## 📱 Mobile-First возможности
+
+| Модуль | Описание |
+|--------|----------|
+| `EdgeComputing.ts` | распределённые задания, mesh discovery, ML-инференс |
+| `CrossPlatformSync.ts` | Handoff, Universal Clipboard, Seamless Switching |
+| `GestureNavigation.ts` | мультитач навигация + хаптика |
+| `SmartContextualMenus.ts` | AI меню с предсказаниями действий |
+| `DynamicThemes.ts` | адаптивные темы по времени/контексту |
+
+Планы по iOS Shortcuts, Widgets, Android Material You и Bubbles задокументированы в [`CUSTOMIZATION_ROADMAP.md`](./CUSTOMIZATION_ROADMAP.md).
+
+---
+
+## 🤝 Как внести вклад
+
+1. Ознакомьтесь с [`CONTRIBUTING.md`](./CONTRIBUTING.md) и `SECURITY.md`.
+2. Выберите задачу в [`FINAL_STATUS.md`](./FINAL_STATUS.md) → раздел «Next Steps».
+3. Соблюдайте гайд по коммитам/PR из [`PULL_REQUEST_TEMPLATE.md`](./PULL_REQUEST_TEMPLATE.md).
+4. Для отечественных Git-платформ используйте сценарии из [`docs/GIT_PLATFORM_GUIDE.md`](./docs/GIT_PLATFORM_GUIDE.md).
+
+Мы принимаем вклад в форме кода, UX-концептов, Solidity-контрактов и документации.
+
+---
+
+## 📣 Связь и поддержка
+
+- **Product Hunt / Launch**: готовится к Q1 2025 (см. `FINAL_RELEASE.md`).
+- **Community**: Discord, Matrix, self-hosted METR Hub (описание в `REBRANDING_GUIDE.md`).
+- **Security reports**: security@metr.app (PGP fingerprint указан в `SECURITY.md`).
+
+METR — катализатор эволюции командной работы. Добро пожаловать в будущее! 🚀

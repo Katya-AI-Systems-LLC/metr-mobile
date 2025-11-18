@@ -471,6 +471,15 @@ class Web3Manager extends EventEmitter {
     };
   }
 
+  // Expose low-level provider/signer for advanced modules (e.g., EmotionalBlockchainClient)
+  public getProvider(): ethers.Provider | null {
+    return this.provider;
+  }
+
+  public getSigner(): ethers.Signer | null {
+    return this.signer;
+  }
+
   public isWalletConnected(): boolean {
     return this.isConnected;
   }
