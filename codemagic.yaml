@@ -80,12 +80,6 @@ workflows:
       - /tmp/xcodebuild_logs/*.log
 
     publishing:
-      email:
-        recipients:
-          - dev-team@metr.local
-        notify:
-          success: true
-          failure: true
 
   metr-android-release:
     name: METR Android Release
@@ -133,13 +127,6 @@ workflows:
       - android/app/build/outputs/**/*.apk
 
     publishing:
-      email:
-        recipients:
-          - releases@metr.local
-        notify:
-          success: true
-          failure: true
-
       google_play:
         # В Codemagic UI создай env var GOOGLE_PLAY_CONFIG со значением JSON cred файла
         credentials: $GOOGLE_PLAY_CONFIG
@@ -198,13 +185,6 @@ workflows:
       - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
 
     publishing:
-      email:
-        recipients:
-          - releases@metr.local
-        notify:
-          success: true
-          failure: true
-
       app_store_connect:
         api_key: $APP_STORE_CONNECT_API_KEY
         key_id: $APP_STORE_CONNECT_KEY_ID
