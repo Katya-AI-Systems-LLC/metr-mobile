@@ -79,8 +79,6 @@ workflows:
       - build/ios/ipa/*.ipa
       - /tmp/xcodebuild_logs/*.log
 
-    publishing:
-
   metr-android-release:
     name: METR Android Release
     max_build_duration: 120
