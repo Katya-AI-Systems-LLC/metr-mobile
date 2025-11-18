@@ -115,6 +115,21 @@ workflows:
         script: |
           echo "sdk.dir=$ANDROID_SDK_ROOT" > "$CM_BUILD_DIR/android/local.properties"
 
+      - name: Preinstall Android NDK 24.0.8215888
+        script: |
+          export ANDROID_SDK_ROOT=${ANDROID_SDK_ROOT:-$HOME/Library/Android/sdk}
+          export ANDROID_HOME="$ANDROID_SDK_ROOT"
+          if [ -x "$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager" ]; then
+            SDKMANAGER="$ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager"
+          elif [ -x "$ANDROID_SDK_ROOT/tools/bin/sdkmanager" ]; then
+            SDKMANAGER="$ANDROID_SDK_ROOT/tools/bin/sdkmanager"
+          else
+            echo "sdkmanager not found under $ANDROID_SDK_ROOT" >&2
+            exit 1
+          fi
+          yes | "$SDKMANAGER" --licenses > /dev/null
+          yes | "$SDKMANAGER" "ndk;24.0.8215888"
+
       - name: Build Android release bundle (.aab)
         script: |
           cd android
