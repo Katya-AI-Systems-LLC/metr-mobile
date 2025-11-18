@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="white">#FFFFFF</color>
-    <color name="transparent">#00000000</color>
-    <color name="splashscreen_bg">#090A0B</color>
+    <!-- METR Dark Mode Colors -->
+    <color name="splashscreen_bg">#0F0F0F</color>
+    <color name="metr_dark_background">#0F0F0F</color>
+    <color name="metr_dark_surface">#1A1A1A</color>
+    <color name="metr_dark_text">#FFFFFF</color>
 </resources>

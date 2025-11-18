@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mattermost.rnbeta">
+    package="com.metr.app">
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission-sdk-23 android:name="android.permission.VIBRATE"/>
@@ -62,13 +62,13 @@
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="mattermost" />
+          <data android:scheme="metr" />
         </intent-filter>
         <intent-filter>
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="mmauthbeta" />
+          <data android:scheme="metrauth" />
         </intent-filter>
       </activity>
       <service android:name=".NotificationDismissService"

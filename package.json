@@ -1,9 +1,9 @@
 {
-  "name": "mattermost-mobile",
-  "version": "2.0.0",
-  "description": "Mattermost Mobile with React Native",
-  "repository": "git@github.com:mattermost/mattermost-mobile.git",
-  "author": "Mattermost, Inc.",
+  "name": "metr-mobile",
+  "version": "2.2.0",
+  "description": "METR - Measure Your Team's Potential. AI-powered team productivity platform built with React Native",
+  "repository": "git@github.com:metr/metr-mobile.git",
+  "author": "METR Team",
   "license": "Apache 2.0",
   "private": true,
   "dependencies": {
@@ -176,6 +176,9 @@
   "scripts": {
     "android": "react-native run-android",
     "build:android": "./scripts/build.sh apk",
+    "build:android-debug": "cd android && ./gradlew assembleDebug",
+    "build:android-debug:win": "powershell -ExecutionPolicy Bypass -File ./scripts/build-android-debug.ps1",
+    "build:android-debug:unix": "bash ./scripts/build-android-debug.sh",
     "build:android-unsigned": "./scripts/build.sh apk unsigned",
     "build:ios": "./scripts/build.sh ipa",
     "build:ios-sim": "./scripts/build.sh ipa simulator",

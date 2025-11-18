@@ -1,6 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- METR Brand Colors -->
     <color name="white">#FFFFFF</color>
     <color name="transparent">#00000000</color>
-    <color name="splashscreen_bg">#FFFFFF</color>
+    
+    <!-- METR Primary Colors -->
+    <color name="metr_primary_electric">#8B5CF6</color>
+    <color name="metr_secondary_teal">#14B8A6</color>
+    <color name="metr_accent_pink">#EC4899</color>
+    
+    <!-- METR Dark Mode Colors -->
+    <color name="metr_dark_background">#0F0F0F</color>
+    <color name="metr_dark_surface">#1A1A1A</color>
+    <color name="metr_dark_text">#FFFFFF</color>
+    
+    <!-- Splash Screen -->
+    <color name="splashscreen_bg">#0F0F0F</color>
+    
+    <!-- Legacy support -->
+    <color name="primary">@color/metr_primary_electric</color>
+    <color name="secondary">@color/metr_secondary_teal</color>
+    <color name="accent">@color/metr_accent_pink</color>
 </resources>
