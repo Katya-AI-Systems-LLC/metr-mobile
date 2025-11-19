@@ -378,7 +378,23 @@ task copyDownloadableDepsToLibs(type: Copy) {
     into 'libs'
 }
 
-apply plugin: 'com.google.gms.google-services'
+// Apply Google Services plugin only if google-services.json contains matching package name
+// This prevents build failures when package name doesn't match (e.g., in debug builds)
+def googleServicesJson = file("google-services.json")
+if (googleServicesJson.exists()) {
+    def json = new groovy.json.JsonSlurper().parse(googleServicesJson)
+    def packageName = android.defaultConfig.applicationId
+    def hasMatchingClient = json.client?.any { it.client_info?.android_client_info?.package_name == packageName }
+    
+    if (hasMatchingClient) {
+        apply plugin: 'com.google.gms.google-services'
+    } else {
+        println "⚠️ WARNING: No matching client found in google-services.json for package name: ${packageName}"
+        println "⚠️ Skipping Google Services plugin. Firebase features will not be available."
+    }
+} else {
+    println "⚠️ WARNING: google-services.json not found. Skipping Google Services plugin."
+}
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
 
 def isNewArchitectureEnabled() {
