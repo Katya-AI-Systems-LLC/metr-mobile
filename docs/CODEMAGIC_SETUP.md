@@ -47,6 +47,8 @@ Navigate to your app settings in Codemagic and configure the following environme
 
 #### Android Signing (`codemagic_android`)
 
+The workflow uses environment variables for Android signing. Configure these variables:
+
 ```
 ANDROID_SIGNING_KEYSTORE=<base64-encoded-keystore>
 KEYSTORE_PASSWORD=<your-keystore-password>
@@ -59,6 +61,23 @@ KEY_PASSWORD=<your-key-password>
 base64 -i your-keystore.jks | pbcopy  # macOS
 base64 your-keystore.jks | clip       # Windows
 ```
+
+**How it works:**
+- The workflow automatically decodes the base64 keystore and sets up signing
+- The keystore is decoded to `android/app/release.keystore` during build
+- Gradle uses the environment variables for signing the release build
+
+**Alternative: Using Codemagic UI Keystore**
+If you prefer to configure the keystore in Codemagic UI:
+1. Go to Settings → Android → Signing
+2. Upload your keystore file
+3. Enter passwords and key alias
+4. Note the keystore reference name
+5. Update `codemagic.yaml` to use:
+   ```yaml
+   android_signing:
+     - your_keystore_reference_name
+   ```
 
 #### Android Credentials (`codemagic_android_credentials`)
 

@@ -12,8 +12,11 @@ workflows:
         - codemagic_android # Contains ANDROID_SIGNING_KEYSTORE, KEYSTORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD
         - codemagic_android_credentials # Contains GOOGLE_SERVICE_ACCOUNT_CREDENTIALS, GOOGLE_PLAY_TRACK
         - codemagic_env # Contains any custom environment variables
-      android_signing:
-        - keystore_reference
+      # Android signing: Using environment variables from codemagic_android group
+      # Alternative: Configure keystore in Codemagic UI (Settings → Android → Signing) 
+      # and uncomment the line below with the correct keystore reference name
+      # android_signing:
+      #   - your_keystore_reference_name
       vars:
         PACKAGE_NAME: "com.metr.mobile"
         APP_NAME: "METR"
@@ -30,12 +33,13 @@ workflows:
           set -e
           echo "🚀 Setting up METR Android build environment..."
           
-          # Set up Node.js
-          echo "📦 Installing Node.js ${NODE_VERSION}..."
-          nvm install ${NODE_VERSION}
-          nvm use ${NODE_VERSION}
+          # Set up Node.js (Codemagic has Node.js pre-installed)
+          echo "📦 Checking Node.js version..."
           node --version
           npm --version
+          
+          # Note: Codemagic provides Node.js pre-installed
+          # Using system Node.js (Codemagic default)
           
           # Set up Java
           echo "☕ Setting up Java ${JAVA_VERSION}..."
@@ -135,6 +139,27 @@ workflows:
           npm test -- --coverage --watchAll=false || echo "⚠️ Tests completed with warnings"
           
           echo "✅ Tests complete"
+      - name: Setup Android signing
+        script: |
+          set -e
+          echo "🔐 Setting up Android signing..."
+          
+          # Decode base64 keystore to file
+          if [ -n "$ANDROID_SIGNING_KEYSTORE" ]; then
+            echo "Decoding keystore from environment variable..."
+            echo "$ANDROID_SIGNING_KEYSTORE" | base64 --decode > android/app/release.keystore
+            
+            # Set environment variables for Gradle (relative to android/app/)
+            export MATTERMOST_RELEASE_STORE_FILE="release.keystore"
+            export MATTERMOST_RELEASE_PASSWORD="$KEYSTORE_PASSWORD"
+            export MATTERMOST_RELEASE_KEY_ALIAS="$KEY_ALIAS"
+            
+            echo "✅ Keystore decoded and environment variables set"
+            echo "Keystore location: android/app/release.keystore"
+          else
+            echo "⚠️ WARNING: ANDROID_SIGNING_KEYSTORE not set. Build will be unsigned."
+            echo "Set ANDROID_SIGNING_KEYSTORE in codemagic_android environment group."
+          fi
       - name: Build Android Release Bundle (AAB)
         script: |
           set -e
@@ -228,9 +253,19 @@ workflows:
           set -e
           echo "🚀 Setting up METR Android Debug build environment..."
           
-          nvm install ${NODE_VERSION}
-          nvm use ${NODE_VERSION}
+          # Set up Node.js (Codemagic has Node.js pre-installed)
+          echo "📦 Checking Node.js version..."
+          node --version
+          npm --version
+          
+          # Note: Codemagic provides Node.js pre-installed
+          # Using system Node.js (Codemagic default)
+          
+          # Set up Java
           export JAVA_HOME=$(/usr/libexec/java_home -v ${JAVA_VERSION})
+          java -version
+          
+          # Set up Android SDK
           export ANDROID_HOME=$HOME/Library/Android/sdk
           export PATH=$PATH:$ANDROID_HOME/platform-tools
           
@@ -284,9 +319,13 @@ workflows:
           set -e
           echo "🚀 Setting up METR iOS build environment..."
           
-          # Set up Node.js
-          nvm install ${NODE_VERSION}
-          nvm use ${NODE_VERSION}
+          # Set up Node.js (Codemagic has Node.js pre-installed)
+          echo "📦 Checking Node.js version..."
+          node --version
+          npm --version
+          
+          # Note: Codemagic provides Node.js pre-installed
+          # Using system Node.js (Codemagic default)
           
           # Set up CocoaPods
           gem install cocoapods -v ${COCOAPODS_VERSION}
@@ -407,8 +446,22 @@ workflows:
       - name: Set up environment
         script: |
           set -e
-          nvm install ${NODE_VERSION}
-          nvm use ${NODE_VERSION}
+          echo "🚀 Setting up METR iOS Debug build environment..."
+          
+          # Set up Node.js (Codemagic has Node.js pre-installed)
+          echo "📦 Checking Node.js version..."
+          node --version || echo "Node.js not found"
+          
+          # Try to use system Node.js (Codemagic default) or install if needed
+          if [ -f "$HOME/.nvm/nvm.sh" ]; then
+            source "$HOME/.nvm/nvm.sh"
+            nvm install ${NODE_VERSION} || echo "Using system Node.js"
+            nvm use ${NODE_VERSION} || echo "Using system Node.js"
+          else
+            echo "Using system Node.js (Codemagic default)"
+          fi
+          
+          # Set up CocoaPods
           gem install cocoapods -v ${COCOAPODS_VERSION}
       - name: Install dependencies
         script: |
@@ -454,8 +507,23 @@ workflows:
       - name: Set up environment
         script: |
           set -e
-          nvm install ${NODE_VERSION}
-          nvm use ${NODE_VERSION}
+          echo "🚀 Setting up METR Test & Quality environment..."
+          
+          # Set up Node.js (Codemagic has Node.js pre-installed)
+          echo "📦 Checking Node.js version..."
+          node --version || echo "Node.js not found"
+          
+          # Try to use system Node.js (Codemagic default) or install if needed
+          if [ -f "$HOME/.nvm/nvm.sh" ]; then
+            source "$HOME/.nvm/nvm.sh"
+            nvm install ${NODE_VERSION} || echo "Using system Node.js"
+            nvm use ${NODE_VERSION} || echo "Using system Node.js"
+          else
+            echo "Using system Node.js (Codemagic default)"
+          fi
+          
+          node --version
+          npm --version
       - name: Install dependencies
         script: |
           set -e
@@ -506,8 +574,23 @@ workflows:
       - name: Set up environment
         script: |
           set -e
-          nvm install ${NODE_VERSION}
-          nvm use ${NODE_VERSION}
+          echo "🚀 Setting up METR E2E Tests environment..."
+          
+          # Set up Node.js (Codemagic has Node.js pre-installed)
+          echo "📦 Checking Node.js version..."
+          node --version || echo "Node.js not found"
+          
+          # Try to use system Node.js (Codemagic default) or install if needed
+          if [ -f "$HOME/.nvm/nvm.sh" ]; then
+            source "$HOME/.nvm/nvm.sh"
+            nvm install ${NODE_VERSION} || echo "Using system Node.js"
+            nvm use ${NODE_VERSION} || echo "Using system Node.js"
+          else
+            echo "Using system Node.js (Codemagic default)"
+          fi
+          
+          node --version
+          npm --version
       - name: Install dependencies
         script: |
           set -e
