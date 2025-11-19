@@ -80,23 +80,34 @@ GOOGLE_SERVICE_ACCOUNT_CREDENTIALS=<base64-encoded-json-key>
 
 #### iOS Signing (`codemagic_ios`)
 
-```
-APP_STORE_CONNECT_KEY_IDENTIFIER=<your-key-id>
-ISSUER_ID=<your-issuer-id>
-APP_STORE_CONNECT_PRIVATE_KEY=<your-private-key-base64>
-```
+The workflow uses `auth: integration` which requires configuring an App Store Connect integration in Codemagic UI.
 
-**To get App Store Connect API Key:**
+**Step 1: Get App Store Connect API Key**
 1. Go to App Store Connect → Users and Access → Keys
 2. Create a new key with App Manager or Admin role
-3. Download the `.p8` key file
-4. Copy the Key ID and Issuer ID
-5. Encode the `.p8` file: `base64 -i AuthKey_XXXXXXXXXX.p8 | pbcopy`
+3. Download the `.p8` key file (you can only download it once!)
+4. Copy the Key ID and Issuer ID from the key details
 
-**Note**: The workflow uses `auth: api_key` which requires these environment variables. Alternatively, you can use `auth: integration` by:
-1. Configuring App Store Connect integration in Codemagic UI
-2. Uncommenting the `integrations` section in `codemagic.yaml`
-3. Changing `auth: api_key` to `auth: integration` in the publishing section
+**Step 2: Configure Integration in Codemagic UI**
+1. Go to your app in Codemagic
+2. Navigate to **Settings → Integrations → App Store Connect**
+3. Click **Add integration** or **Connect**
+4. Enter:
+   - **Integration name**: `codemagic_ios` (must match the name in `codemagic.yaml`)
+   - **Key ID**: Your App Store Connect Key ID
+   - **Issuer ID**: Your App Store Connect Issuer ID
+   - **Private Key**: Upload or paste the `.p8` file content
+5. Save the integration
+
+**Step 3: Verify Configuration**
+- The `codemagic.yaml` file references this integration via:
+  ```yaml
+  integrations:
+    app_store_connect: codemagic_ios
+  ```
+- Make sure the integration name matches exactly
+
+**Note**: If you need to use a different integration name, update both the Codemagic UI integration name and the `codemagic.yaml` file to match.
 
 #### iOS Certificates (`codemagic_certificates`)
 
@@ -127,8 +138,12 @@ ANALYTICS_KEY=your-analytics-key
 
 1. Go to App Settings → iOS → Signing
 2. Choose "Automatic" or "Manual" signing
-3. For automatic signing, provide your App Store Connect API key
+3. For automatic signing:
+   - Configure App Store Connect integration (see iOS Signing section above)
+   - The workflow will use the integration for signing and publishing
 4. For manual signing, upload your certificates and provisioning profiles
+
+**Important**: The `ios-release` workflow requires the App Store Connect integration to be configured in Codemagic UI (Settings → Integrations → App Store Connect) with the name `codemagic_ios`.
 
 ## Workflows
 
