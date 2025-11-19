@@ -283,6 +283,33 @@ workflows:
           node scripts/generate-assets.js
           mkdir -p dist/assets/i18n
           cp -r assets/base/i18n/* dist/assets/i18n/ || true
+      - name: Generate debug keystore
+        script: |
+          set -e
+          echo "🔐 Generating debug keystore..."
+          
+          # Ensure Java is available for keytool
+          export JAVA_HOME=$(/usr/libexec/java_home -v ${JAVA_VERSION})
+          
+          # Generate debug keystore if it doesn't exist
+          if [ ! -f "android/app/debug.keystore" ]; then
+            echo "Creating debug keystore..."
+            cd android/app
+            keytool -genkeypair \
+              -v -storetype PKCS12 \
+              -keystore debug.keystore \
+              -alias androiddebugkey \
+              -keyalg RSA \
+              -keysize 2048 \
+              -validity 10000 \
+              -storepass android \
+              -keypass android \
+              -dname "CN=Android Debug,O=Android,C=US"
+            cd ../..
+            echo "✅ Debug keystore created at android/app/debug.keystore"
+          else
+            echo "✅ Debug keystore already exists at android/app/debug.keystore"
+          fi
       - name: Build Debug APK
         script: |
           set -e
