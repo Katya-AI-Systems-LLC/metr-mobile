@@ -83,7 +83,7 @@ GOOGLE_SERVICE_ACCOUNT_CREDENTIALS=<base64-encoded-json-key>
 ```
 APP_STORE_CONNECT_KEY_IDENTIFIER=<your-key-id>
 ISSUER_ID=<your-issuer-id>
-PRIVATE_KEY=<your-private-key>
+APP_STORE_CONNECT_PRIVATE_KEY=<your-private-key-base64>
 ```
 
 **To get App Store Connect API Key:**
@@ -91,6 +91,12 @@ PRIVATE_KEY=<your-private-key>
 2. Create a new key with App Manager or Admin role
 3. Download the `.p8` key file
 4. Copy the Key ID and Issuer ID
+5. Encode the `.p8` file: `base64 -i AuthKey_XXXXXXXXXX.p8 | pbcopy`
+
+**Note**: The workflow uses `auth: api_key` which requires these environment variables. Alternatively, you can use `auth: integration` by:
+1. Configuring App Store Connect integration in Codemagic UI
+2. Uncommenting the `integrations` section in `codemagic.yaml`
+3. Changing `auth: api_key` to `auth: integration` in the publishing section
 
 #### iOS Certificates (`codemagic_certificates`)
 

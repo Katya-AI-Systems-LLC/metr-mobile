@@ -262,9 +262,13 @@ workflows:
     name: METR iOS Release
     max_build_duration: 120
     instance_type: mac_mini_m2
+    # Option 1: Use integration (requires App Store Connect integration configured in Codemagic UI)
+    # Uncomment the line below and configure the integration name in Codemagic UI
+    # integrations:
+    #   app_store_connect: codemagic_ios # Change to your integration name
     environment:
       groups:
-        - codemagic_ios # Contains APP_STORE_CONNECT_KEY_IDENTIFIER, ISSUER_ID, PRIVATE_KEY
+        - codemagic_ios # Contains APP_STORE_CONNECT_KEY_IDENTIFIER, ISSUER_ID, APP_STORE_CONNECT_PRIVATE_KEY
         - codemagic_certificates # Contains CERTIFICATE_PRIVATE_KEY, CERTIFICATE_PASSWORD
         - codemagic_env
       ios_signing:
@@ -382,11 +386,18 @@ workflows:
           success: true
           failure: true
       app_store_connect:
-        auth: integration
+        # Option 1: Use integration (requires integrations section above)
+        # auth: integration
+        # Option 2: Use API key from environment variables (recommended)
+        auth: api_key
+        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
+        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
+        issuer_id: $ISSUER_ID
         submit_to_testflight: true
-        beta_groups:
-          - group name 1
-          - group name 2
+        # Beta groups: Add your TestFlight beta group names here
+        # beta_groups:
+        #   - "Internal Testers"
+        #   - "Beta Testers"
 
   # iOS Debug Build Workflow
   ios-debug:
