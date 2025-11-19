@@ -1,0 +1,14 @@
+# GitLab A/B Testing Setup
+a-b-testing:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run ab-test:setup
+    - npm run ab-test:verify
+  only:
+    - main
+  tags:
+    - ab-testing
+
+

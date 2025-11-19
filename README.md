@@ -1,124 +1,252 @@
-# METR — Modern Enterprise Team Revolution
+# 🚀 METR - Measure Your Team's Potential
 
-**"Measure Your Team's Potential"**
+<div align="center">
 
-METR — это полное переосмысление Mattermost Mobile как AI-powered платформы для продуктивности команд. Мы объединили автономных AI-агентов, Web3-механику, AR/VR коммуникацию, edge-вычисления и глубокую мобильную интеграцию в одном приложении, готовом к self-hosting и enterprise масштабам.
+![METR Logo](assets/branding/metr-logo-base.svg)
 
----
+**AI-powered team productivity platform built with React Native**
 
-## 📌 Ключевая ценность
+[![Version](https://img.shields.io/badge/version-2.2.0-blue.svg)](https://github.com/metr/metr-mobile)
+[![License](https://img.shields.io/badge/license-Apache%202.0-green.svg)](LICENSE.txt)
+[![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android-lightgrey.svg)](https://github.com/metr/metr-mobile)
+[![React Native](https://img.shields.io/badge/React%20Native-0.73+-blue.svg)](https://reactnative.dev/)
 
-| Столп | Что включает |
-|-------|--------------|
-| **AI-First** | Персональные и командные ассистенты, Digital Twin, Emotion Analysis, Predictive Insights |
-| **Privacy & Security** | Zero-Knowledge Encryption, Biometric Auth, Quantum-Resistant Crypto |
-| **Web3-Ready** | NFT Achievements, DAO governance, Token economy, Blockchain Audit Trail |
-| **Metaverse-Compatible** | Spatial Audio Rooms, Virtual Offices, AR Annotations, Holographic meetings |
-| **Productivity-Focused** | Workflow Builder, OKRs, Time Tracking, Knowledge Graph, Automation Suites |
+[Features](#-features) • [Installation](#-installation) • [Documentation](#-documentation) • [Contributing](#-contributing) • [License](#-license)
 
-Полный список модулей и API см. в [`FINAL_IMPLEMENTATION_STATUS.md`](./FINAL_IMPLEMENTATION_STATUS.md).
+</div>
 
 ---
 
-## 🧭 Архитектура
+## 📖 О проекте
 
-- **Frontend**: React Native 0.73+, Expo SDK 50 optional, Reanimated 3, RN Skia, Tailwind-подобные утилиты.
-- **AI Stack**: TensorFlow Lite, локальные модели (Whisper-tiny, BERT-tiny), OpenAI/Whisper/DALL·E коннекторы, автономные агенты.
-- **Web3 Stack**: Solidity контракты (Polygon/Ethereum), WalletConnect, IPFS, Ceramic ID.
-- **Sync & Edge**: CrossPlatformSync (handoff/clipboard), P2P mesh, Offline AI кэширование, `EdgeComputing` для распределённых задач.
-- **Security**: Hardware keystore, biometric fallback, zero-knowledge поток для чувствительных данных.
+**METR** (Modern Enterprise Team Revolution) - это не просто мессенджер, а интеллектуальная экосистема для командной работы нового поколения. Платформа объединяет AI, Web3, AR/VR и передовые технологии для максимальной продуктивности команд.
 
-Схемы данных и событий — в [`docs/base_configs.md`](./docs/base_configs.md) и `app/*` подпакетах.
+### 🎯 Ключевые принципы
+
+- **AI-First**: Встроенный AI-ассистент для каждой команды
+- **Privacy-First**: Полный контроль над данными с возможностью self-hosting
+- **Web3-Ready**: Интеграция с блокчейн для прозрачности и токенизации
+- **Metaverse-Compatible**: Готовность к виртуальным пространствам
+- **Productivity-Focused**: Фокус на результатах, а не на переписке
+
+---
+
+## ✨ Features
+
+### 🤖 AI Capabilities
+- **Personal AI Assistant** - Персональный ассистент для каждого пользователя
+- **Team AI Manager** - Командный AI-менеджер для проектов
+- **Smart Summaries** - Автоматические саммари длинных дискуссий
+- **Action Items Extraction** - Выделение задач из переписки
+- **Emotion Analysis** - Анализ настроения команды
+- **Code Review Assistant** - Помощь в код-ревью
+- **Predictive Analytics** - Прогнозирование сроков и рисков
+
+### 💎 Web3 Integration
+- **NFT Achievements** - Награды за достижения в виде NFT
+- **DAO Governance** - Управление организацией через DAO
+- **Token Economy** - Внутренние токены для мотивации
+- **Blockchain Audit Trail** - Неизменяемая история действий
+- **DeFi Integration** - Интеграция с крипто-платежами
+
+### 🥽 AR/VR Features
+- **Spatial Audio Rooms** - 3D аудио-комнаты
+- **Virtual Offices** - Виртуальные офисы для удаленных команд
+- **Holographic Meetings** - Голографические встречи
+- **AR Annotations** - AR-аннотации к документам
+
+### 🔐 Advanced Security
+- **Zero-Knowledge Encryption** - Шифрование с нулевым разглашением
+- **Biometric Authentication** - Биометрическая аутентификация
+- **Quantum-Resistant Cryptography** - Квантово-устойчивая криптография
+
+### 📋 Productivity Suite
+- **Task Management 2.0** - Встроенный таск-менеджер с AI
+- **Time Tracking** - Автоматический тайм-трекинг
+- **Goal Setting & OKRs** - Система целей и OKR
+- **Knowledge Base** - Встроенная база знаний с AI-поиском
+- **Workflow Builder** - Визуальный конструктор процессов
+
+### 🤝 Collaboration Tools
+- **Whiteboard 3D** - Трехмерные доски для brainstorming
+- **Code Collaboration** - Совместное программирование в реальном времени
+- **Design Review** - Инструменты для дизайн-ревью
+- **Video Messages** - Асинхронные видео-сообщения
+- **Voice Notes** - Голосовые заметки с расшифровкой
+
+### 📊 Analytics & Insights
+- **Team Health Dashboard** - Дашборд здоровья команды
+- **Performance Metrics** - Метрики производительности
+- **Communication Patterns** - Анализ паттернов коммуникации
+- **Burnout Prevention** - Предотвращение выгорания
+- **Skills Matrix** - Матрица компетенций команды
 
 ---
 
 ## 🚀 Быстрый старт
 
+### Требования
+
+- **Node.js** 18+ и npm/yarn
+- **React Native** 0.73+
+- **Java JDK** 17+ (для Android)
+- **Xcode** 14+ (для iOS)
+- **Android Studio** (для Android)
+
+### Установка
+
 ```bash
-git clone https://github.com/katya-ai-systems/metr-mobile.git
+# Клонировать репозиторий
+git clone https://github.com/metr/metr-mobile.git
 cd metr-mobile
-npm install # или yarn
 
-# Быстрая сборка dev окружения
-npx react-native start
-npx react-native run-ios   # или run-android
+# Установить зависимости
+npm install
 
-# Edge/AI симуляторы
-npm run simulate:ai
-npm run simulate:web3
+# Для iOS
+cd ios && pod install && cd ..
+
+# Запустить Metro bundler
+npm start
+
+# Запустить на iOS
+npm run ios
+
+# Запустить на Android
+npm run android
 ```
 
-**Минимальные версии серверов**: METR Core 1.0+ (совместим с Mattermost ESR 7.1).  
-**Поддержка платформ**: iOS 14+, Android 10+.  
-**Push**: используйте self-hosted METR Push Relay (`docs/INSTALLATION_GUIDE.md`).
+Подробнее в [INSTALLATION_GUIDE.md](INSTALLATION_GUIDE.md)
+
+---
+
+## 📱 Сборка
+
+### Android Debug APK
+
+```bash
+# Windows
+npm run build:android-debug:win
+
+# Linux/Mac
+npm run build:android-debug:unix
+```
+
+Подробнее в [BUILD_ANDROID_DEBUG.md](BUILD_ANDROID_DEBUG.md)
+
+### iOS Build
+
+```bash
+cd ios
+xcodebuild -workspace Mattermost.xcworkspace -scheme Mattermost -configuration Debug
+```
 
 ---
 
 ## 📚 Документация
 
-| Раздел | Файл |
-|--------|------|
-| Стратегия модернизации | [`docs/MODERNIZATION_CONCEPT_2025.md`](./docs/MODERNIZATION_CONCEPT_2025.md) |
-| Полная реализация | [`IMPLEMENTATION_COMPLETE.md`](./IMPLEMENTATION_COMPLETE.md) |
-| Ребрендинг | [`FINAL_REBRANDING_STATUS.md`](./FINAL_REBRANDING_STATUS.md) |
-| Установка и DevOps | [`INSTALLATION_GUIDE.md`](./INSTALLATION_GUIDE.md), [`ANDROID_BUILD_GUIDE.md`](./ANDROID_BUILD_GUIDE.md), [`QUICK_BUILD.md`](./QUICK_BUILD.md) |
-| Безопасность | [`SECURITY.md`](./SECURITY.md) |
-| Миграция | [`MIGRATION_TO_METR.md`](./MIGRATION_TO_METR.md) |
-| Док для Git-платформ | [`docs/GIT_PLATFORM_GUIDE.md`](./docs/GIT_PLATFORM_GUIDE.md) |
-| Лицензирование | [`LICENSE_METR.md`](./LICENSE_METR.md) + [`LICENSE.txt`](./LICENSE.txt) |
-
-Полный навигатор по файлам см. в [`docs/METR_DOCUMENTATION_PORTAL.md`](./docs/METR_DOCUMENTATION_PORTAL.md).
+- [Installation Guide](INSTALLATION_GUIDE.md) - Подробная инструкция по установке
+- [Modernization Concept](docs/MODERNIZATION_CONCEPT_2025.md) - Концепция модернизации
+- [API Documentation](docs/API.md) - Документация API
+- [Architecture](docs/ARCHITECTURE.md) - Архитектура приложения
+- [Contributing Guide](CONTRIBUTING.md) - Руководство для контрибьюторов
+- [Security Policy](SECURITY.md) - Политика безопасности
+- [Release Notes](RELEASE_NOTES.md) - Заметки о релизах
 
 ---
 
-## 🧠 AI & Automation
+## 🏗️ Архитектура
 
-- `app/ai/PersonalAssistant.ts`: персональный ассистент с Smart Replies, расписаниями, Code Review.
-- `app/ai/TeamAssistant.ts`: командный менеджер со сводками митингов.
-- `app/ai/DigitalTwin.ts`: цифровой двойник команды (предиктивные сценарии, health-score).
-- `app/ai/MicroInteractions.ts` + `app/ui/HapticFeedback.ts`: полный UX motion kit.
-
-AI рабочие процессы определяются в `app/ai/workflows/*` и кастомизируются через Workflow Builder (см. `app/workflows/WorkflowBuilder.tsx`).
-
----
-
-## 🌐 Web3 & Compliance
-
-- Контракты лежат в [`contracts/`](./contracts) (NFT, Governance, AuditTrail).
-- Интеграция с WalletConnect/IPFS и корпоративными кошельками описана в `app/web3/*`.
-- Лицензирование и открытые компоненты сведены в [`LICENSE_METR.md`](./LICENSE_METR.md) и `NOTICE.txt`.
-
----
-
-## 📱 Mobile-First возможности
-
-| Модуль | Описание |
-|--------|----------|
-| `EdgeComputing.ts` | распределённые задания, mesh discovery, ML-инференс |
-| `CrossPlatformSync.ts` | Handoff, Universal Clipboard, Seamless Switching |
-| `GestureNavigation.ts` | мультитач навигация + хаптика |
-| `SmartContextualMenus.ts` | AI меню с предсказаниями действий |
-| `DynamicThemes.ts` | адаптивные темы по времени/контексту |
-
-Планы по iOS Shortcuts, Widgets, Android Material You и Bubbles задокументированы в [`CUSTOMIZATION_ROADMAP.md`](./CUSTOMIZATION_ROADMAP.md).
+```
+metr-mobile/
+├── app/
+│   ├── ai/                 # AI модули
+│   ├── ar/                 # AR/VR функции
+│   ├── blockchain/         # Web3 интеграция
+│   ├── collaboration/      # Инструменты коллаборации
+│   ├── components/         # UI компоненты
+│   ├── productivity/       # Продуктивность
+│   ├── security/           # Безопасность
+│   └── ...
+├── contracts/              # Smart contracts
+├── android/                # Android нативные модули
+├── ios/                    # iOS нативные модули
+└── docs/                   # Документация
+```
 
 ---
 
-## 🤝 Как внести вклад
+## 🧪 Тестирование
 
-1. Ознакомьтесь с [`CONTRIBUTING.md`](./CONTRIBUTING.md) и `SECURITY.md`.
-2. Выберите задачу в [`FINAL_STATUS.md`](./FINAL_STATUS.md) → раздел «Next Steps».
-3. Соблюдайте гайд по коммитам/PR из [`PULL_REQUEST_TEMPLATE.md`](./PULL_REQUEST_TEMPLATE.md).
-4. Для отечественных Git-платформ используйте сценарии из [`docs/GIT_PLATFORM_GUIDE.md`](./docs/GIT_PLATFORM_GUIDE.md).
+```bash
+# Unit тесты
+npm test
 
-Мы принимаем вклад в форме кода, UX-концептов, Solidity-контрактов и документации.
+# E2E тесты (Detox)
+cd detox && npm test
+
+# Линтинг
+npm run lint
+
+# Type checking
+npm run type-check
+```
 
 ---
 
-## 📣 Связь и поддержка
+## 🤝 Contributing
 
-- **Product Hunt / Launch**: готовится к Q1 2025 (см. `FINAL_RELEASE.md`).
-- **Community**: Discord, Matrix, self-hosted METR Hub (описание в `REBRANDING_GUIDE.md`).
-- **Security reports**: security@metr.app (PGP fingerprint указан в `SECURITY.md`).
+Мы приветствуем вклад в проект! Пожалуйста, ознакомьтесь с [CONTRIBUTING.md](CONTRIBUTING.md) для получения подробной информации.
 
-METR — катализатор эволюции командной работы. Добро пожаловать в будущее! 🚀
+### Процесс
+
+1. Fork проекта
+2. Создайте feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit изменения (`git commit -m 'Add some AmazingFeature'`)
+4. Push в branch (`git push origin feature/AmazingFeature`)
+5. Откройте Pull Request
+
+---
+
+## 📄 Лицензия
+
+Этот проект лицензирован под Apache License 2.0 - см. [LICENSE.txt](LICENSE.txt) для деталей.
+
+---
+
+## 👥 Команда
+
+- **METR Team** - Разработка и поддержка
+
+---
+
+## 🙏 Благодарности
+
+- React Native Community
+- Mattermost (базовая платформа)
+- Все контрибьюторы
+
+---
+
+## 📞 Контакты
+
+- **Website**: [metr.app](https://metr.app)
+- **Email**: support@metr.app
+- **Discord**: [Join our community](https://discord.gg/metr)
+- **Twitter**: [@metrapp](https://twitter.com/metrapp)
+
+---
+
+## 🌟 Star History
+
+Если проект полезен, поставьте ⭐ на GitHub!
+
+---
+
+<div align="center">
+
+**Made with ❤️ by METR Team**
+
+[⬆ Back to Top](#-metr---measure-your-teams-potential)
+
+</div>

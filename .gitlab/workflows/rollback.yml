@@ -1,0 +1,14 @@
+# GitLab Rollback Workflow
+rollback:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - echo "Rolling back to previous version"
+    - ./scripts/rollback.sh
+  only:
+    - main
+  when: manual
+  tags:
+    - production
+
+

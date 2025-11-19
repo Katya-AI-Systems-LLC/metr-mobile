@@ -1,0 +1,19 @@
+# GitLab Visual Regression Testing
+visual-regression:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run test:visual
+    - npm run visual:compare
+  artifacts:
+    when: always
+    paths:
+      - visual-diffs/
+  only:
+    - merge_requests
+    - main
+  tags:
+    - visual
+
+

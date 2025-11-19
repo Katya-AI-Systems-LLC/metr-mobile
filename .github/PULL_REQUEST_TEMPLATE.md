@@ -1,62 +1,69 @@
-<!-- Thank you for contributing a pull request! Here are a few tips to help you:
+# Pull Request
 
-1. If this is your first contribution, make sure you've read the Contribution Checklist https://developers.mattermost.com/contribute/getting-started/contribution-checklist/
-2. Read our blog post about "Submitting Great PRs" https://developers.mattermost.com/blog/2019-01-24-submitting-great-prs
-3. Take a look at other repository specific documentation at https://developers.mattermost.com/contribute
--->
+## 📋 Description
 
-#### Summary
-<!--
-A brief description of what this pull request does.
--->
+Опишите изменения в этом PR.
 
-#### Ticket Link
-<!--
-If this pull request addresses a Help Wanted ticket or fixes a reported issue, please link the relevant GitHub issue, e.g.
+## 🔗 Related Issue
 
-  Fixes https://github.com/mattermost/mattermost-mobile/issues/XXXXX
+Closes #(issue number)
 
-Otherwise, link the JIRA ticket.
--->
+## 🔄 Type of Change
 
-#### Checklist
-<!--
-Place an '[x]' (no spaces) in all applicable fields. Please remove unrelated fields.
--->
-- [ ] Added or updated unit tests (required for all new features)
-- [ ] Has UI changes
-- [ ] Includes text changes and localization file updates
-- [ ] Have tested against the 5 core themes to ensure consistency between them.
+- [ ] 🐛 Bug fix (non-breaking change which fixes an issue)
+- [ ] ✨ New feature (non-breaking change which adds functionality)
+- [ ] 💥 Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] 📚 Documentation update
+- [ ] 🎨 Style/formatting changes
+- [ ] ♻️ Code refactoring
+- [ ] ⚡ Performance improvements
+- [ ] ✅ Tests
 
-#### Device Information
-This PR was tested on: <!-- Device name(s), OS version(s) -->
+## 🧪 Testing
 
-#### Screenshots
-<!--
-If the PR includes UI changes, include screenshots/GIFs/Videos (for both iOS and Android if possible).
--->
+Опишите тесты, которые вы запустили для проверки изменений:
 
-#### Release Note
-<!--
-Add a release note for each of the following conditions:
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] E2E tests
+- [ ] Manual testing
 
-* New features and improvements, including behavioural changes, UI changes
-* Bug fixes and fixes of previous known issues
-* Deprecation warnings, breaking changes, or compatibility notes
-
-If no release notes are required write NONE. Use past-tense. Newlines are stripped.
-
-Example:
-
-```release-note
-Added a new config setting ServiceSettings.FooBar. Added a new column Foo to the Users table.
+**Test Results**:
+```
+Вставьте результаты тестов здесь
 ```
 
-```release-note
-NONE
-```
--->
+## 📸 Screenshots
 
-```release-note
+Если применимо, добавьте скриншоты изменений.
 
-```
+### Before
+![Before](url)
+
+### After
+![After](url)
+
+## ✅ Checklist
+
+- [ ] Мой код следует стилю проекта
+- [ ] Я выполнил self-review своего кода
+- [ ] Я прокомментировал код, особенно в сложных местах
+- [ ] Я внес соответствующие изменения в документацию
+- [ ] Мои изменения не генерируют новых warnings
+- [ ] Я добавил тесты, которые доказывают, что мой fix эффективен или что моя feature работает
+- [ ] Новые и существующие unit тесты проходят локально с моими изменениями
+- [ ] Любые зависимые изменения были объединены и опубликованы
+
+## 📱 Platform Testing
+
+- [ ] iOS
+- [ ] Android
+- [ ] Both
+
+## 🔍 Code Review Notes
+
+Любые дополнительные заметки для ревьюеров.
+
+---
+
+**Thank you for contributing to METR! 🚀**

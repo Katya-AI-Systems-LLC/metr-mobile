@@ -1,0 +1,15 @@
+# GitHub Issue Template Configuration
+blank_issues_enabled: true
+contact_links:
+  - name: 💬 Discord Community
+    url: https://discord.gg/metr
+    about: Join our Discord community for real-time discussions
+  - name: 📚 Documentation
+    url: https://docs.metr.app
+    about: Check our documentation for answers
+  - name: 🔒 Security Issues
+    url: mailto:security@metr.app
+    about: Report security vulnerabilities privately
+  - name: 💡 Feature Requests
+    url: https://github.com/metr/metr-mobile/discussions
+    about: Discuss feature ideas in GitHub Discussions

@@ -1,0 +1,34 @@
+version: '3.8'
+
+services:
+  metr-mobile:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: metr-mobile
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - "8081:8081"  # Metro bundler
+    environment:
+      - NODE_ENV=development
+    command: npm start
+
+  # Android build service
+  android-builder:
+    build:
+      context: .
+      dockerfile: Dockerfile.android
+    container_name: metr-android-builder
+    volumes:
+      - .:/app
+      - android-gradle-cache:/root/.gradle
+    environment:
+      - ANDROID_HOME=/opt/android-sdk
+    command: cd android && ./gradlew assembleDebug
+
+volumes:
+  android-gradle-cache:
+
+

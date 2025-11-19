@@ -1,0 +1,13 @@
+# GitLab Incident Response
+incident-response:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - ./scripts/incident-response.sh
+  only:
+    - main
+  when: manual
+  tags:
+    - incident
+
+

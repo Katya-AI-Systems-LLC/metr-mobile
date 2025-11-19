@@ -1,0 +1,17 @@
+# GitLab Metrics Collection
+metrics:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run metrics:collect
+    - npm run metrics:export
+  artifacts:
+    paths:
+      - metrics.json
+  only:
+    - schedules
+  tags:
+    - metrics
+
+

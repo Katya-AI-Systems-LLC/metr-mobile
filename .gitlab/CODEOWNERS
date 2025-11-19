@@ -1,0 +1,43 @@
+# GitLab CODEOWNERS file
+# https://docs.gitlab.com/ee/user/project/code_owners/
+
+# Core application
+/app/ @metr/core-team
+/app/core/ @metr/core-team @metr/architects
+/app/ai/ @metr/ai-team
+/app/quantum/ @metr/quantum-team
+/app/ar/ @metr/ar-team
+/app/web3/ @metr/web3-team
+
+# Security
+/app/security/ @metr/security-team
+*.sol @metr/security-team @metr/web3-team
+
+# Configuration files
+package.json @metr/core-team
+tsconfig.json @metr/core-team
+.gitlab-ci.yml @metr/devops-team
+android/ @metr/android-team
+ios/ @metr/ios-team
+
+# Documentation
+docs/ @metr/docs-team
+*.md @metr/docs-team
+
+# Tests
+__tests__/ @metr/qa-team
+*.test.ts @metr/qa-team
+*.test.tsx @metr/qa-team
+
+# CI/CD
+.github/ @metr/devops-team
+.gitlab/ @metr/devops-team
+Jenkinsfile @metr/devops-team
+.drone.yml @metr/devops-team
+.circleci/ @metr/devops-team
+.travis.yml @metr/devops-team
+
+# All files fallback
+* @metr/core-team
+
+

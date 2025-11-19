@@ -1,0 +1,14 @@
+# GitLab User Tracking
+user-tracking:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run user-tracking:setup
+    - npm run user-tracking:verify
+  only:
+    - main
+  tags:
+    - user-tracking
+
+

@@ -1,0 +1,18 @@
+# GitLab License Check
+license-check:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run license:check
+    - npm run license:report
+  artifacts:
+    reports:
+      license: license-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - license
+
+

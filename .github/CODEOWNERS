@@ -1,0 +1,28 @@
+# Default owners for everything in the repo
+* @metr-team
+
+# Core team owns critical files
+/.github/ @metr-team
+/package.json @metr-team
+/android/app/build.gradle @metr-team
+/ios/Mattermost.xcodeproj/ @metr-team
+
+# AI modules
+/app/ai/ @metr-ai-team
+
+# Security modules
+/app/security/ @metr-security-team
+
+# Web3 modules
+/app/blockchain/ @metr-web3-team
+/contracts/ @metr-web3-team
+
+# UI/UX
+/app/components/ @metr-ui-team
+/app/theme/ @metr-ui-team
+
+# Documentation
+/docs/ @metr-team
+*.md @metr-team
+
+

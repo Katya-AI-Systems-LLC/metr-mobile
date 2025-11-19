@@ -1,0 +1,16 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+# Run tests
+echo "🧪 Running tests..."
+npm test
+
+# Check test coverage
+echo "📊 Checking test coverage..."
+npm run test:coverage
+
+# Security scan
+echo "🔒 Running security scan..."
+npm audit --audit-level=moderate || true
+
+

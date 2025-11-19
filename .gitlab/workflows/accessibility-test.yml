@@ -1,0 +1,18 @@
+# GitLab Accessibility Testing
+accessibility-test:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run test:a11y
+    - npm run a11y:report
+  artifacts:
+    reports:
+      accessibility: a11y-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - accessibility
+
+

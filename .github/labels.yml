@@ -1,0 +1,118 @@
+# GitHub Labels Configuration
+# https://github.com/actions/label-sync
+
+# Platform labels
+- name: platform:ios
+  color: '007AFF'
+  description: iOS platform specific
+
+- name: platform:android
+  color: '3DDC84'
+  description: Android platform specific
+
+# Area labels
+- name: area:ai
+  color: 'FF6B6B'
+  description: AI/ML related
+
+- name: area:web3
+  color: 'F7931E'
+  description: Web3/Blockchain related
+
+- name: area:ar-vr
+  color: '8E44AD'
+  description: AR/VR related
+
+- name: area:quantum
+  color: '3498DB'
+  description: Quantum computing related
+
+- name: area:security
+  color: 'E74C3C'
+  description: Security related
+
+- name: area:ui
+  color: '9B59B6'
+  description: UI/UX related
+
+- name: area:docs
+  color: '34495E'
+  description: Documentation related
+
+- name: area:ci-cd
+  color: '16A085'
+  description: CI/CD related
+
+# Type labels
+- name: type:bug
+  color: 'D73A4A'
+  description: Bug fix
+
+- name: type:feature
+  color: '0052CC'
+  description: New feature
+
+- name: type:refactor
+  color: '7057FF'
+  description: Code refactoring
+
+- name: type:test
+  color: '0E8A16'
+  description: Test related
+
+- name: type:docs
+  color: '5319E7'
+  description: Documentation
+
+# Priority labels
+- name: priority:critical
+  color: 'B60205'
+  description: Critical priority
+
+- name: priority:high
+  color: 'D93F0B'
+  description: High priority
+
+- name: priority:medium
+  color: 'FBBC04'
+  description: Medium priority
+
+- name: priority:low
+  color: '0E8A16'
+  description: Low priority
+
+# Status labels
+- name: status:blocked
+  color: '000000'
+  description: Blocked
+
+- name: status:in-progress
+  color: 'EDEDED'
+  description: In progress
+
+- name: status:needs-review
+  color: 'FBCA04'
+  description: Needs review
+
+- name: status:ready
+  color: '0E8A16'
+  description: Ready
+
+# Special labels
+- name: good-first-issue
+  color: '7057FF'
+  description: Good for newcomers
+
+- name: help-wanted
+  color: '008672'
+  description: Help wanted
+
+- name: stale
+  color: 'BEBEBE'
+  description: Stale issue/PR
+
+- name: pinned
+  color: '000000'
+  description: Pinned
+
+

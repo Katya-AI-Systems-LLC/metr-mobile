@@ -1,0 +1,202 @@
+# GitLab CI/CD Configuration for METR
+# https://docs.gitlab.com/ee/ci/
+
+stages:
+  - lint
+  - test
+  - build
+  - deploy
+
+variables:
+  NODE_VERSION: "18"
+  ANDROID_SDK_TOOLS: "9477386"
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+# Cache configuration
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+    - android/.gradle/
+    - android/app/build/
+    - ios/Pods/
+    - .yarn/
+
+# Lint job
+lint:
+  stage: lint
+  image: node:${NODE_VERSION}-alpine
+  script:
+    - npm ci
+    - npm run lint
+    - npm run type-check
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# Test job
+test:
+  stage: test
+  image: node:${NODE_VERSION}-alpine
+  script:
+    - npm ci
+    - npm test -- --coverage
+  coverage: '/Lines\s*:\s*(\d+\.\d+)%/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+  only:
+    - merge_requests
+    - main
+    - develop
+
+# Build Android Debug
+build:android:debug:
+  stage: build
+  image: openjdk:17-jdk-slim
+  before_script:
+    - apt-get update && apt-get install -y wget unzip git
+    - export ANDROID_HOME=/opt/android-sdk
+    - export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+    - |
+      if [ ! -d "$ANDROID_HOME" ]; then
+        mkdir -p $ANDROID_HOME
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+        unzip commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip -d $ANDROID_HOME/cmdline-tools
+        rm commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+        yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --licenses
+      fi
+    - curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
+    - apt-get install -y nodejs
+    - npm ci
+  script:
+    - cd android
+    - ./gradlew assembleDebug
+  artifacts:
+    paths:
+      - android/app/build/outputs/apk/debug/app-debug.apk
+    expire_in: 1 week
+  only:
+    - tags
+    - main
+    - develop
+
+# Build Android Release
+build:android:release:
+  stage: build
+  image: openjdk:17-jdk-slim
+  before_script:
+    - apt-get update && apt-get install -y wget unzip git
+    - export ANDROID_HOME=/opt/android-sdk
+    - export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+    - |
+      if [ ! -d "$ANDROID_HOME" ]; then
+        mkdir -p $ANDROID_HOME
+        wget -q https://dl.google.com/android/repository/commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+        unzip commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip -d $ANDROID_HOME/cmdline-tools
+        rm commandlinetools-linux-${ANDROID_SDK_TOOLS}_latest.zip
+        yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --licenses
+      fi
+    - curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
+    - apt-get install -y nodejs
+    - npm ci
+  script:
+    - cd android
+    - ./gradlew assembleRelease
+  artifacts:
+    paths:
+      - android/app/build/outputs/apk/release/app-release.apk
+    expire_in: 1 month
+  only:
+    - tags
+
+# Build iOS
+build:ios:
+  stage: build
+  image: xcode:14.0
+  before_script:
+    - brew install node@${NODE_VERSION}
+    - export PATH="/usr/local/opt/node@${NODE_VERSION}/bin:$PATH"
+    - npm ci
+    - cd ios && pod install && cd ..
+  script:
+    - xcodebuild -workspace ios/Mattermost.xcworkspace
+      -scheme Mattermost
+      -configuration Release
+      -sdk iphonesimulator
+      -destination 'platform=iOS Simulator,name=iPhone 14'
+      clean build
+  artifacts:
+    paths:
+      - ios/build/
+    expire_in: 1 week
+  only:
+    - tags
+    - main
+
+# Deploy to TestFlight (iOS)
+deploy:ios:testflight:
+  stage: deploy
+  image: xcode:14.0
+  before_script:
+    - brew install node@${NODE_VERSION}
+    - export PATH="/usr/local/opt/node@${NODE_VERSION}/bin:$PATH"
+    - npm ci
+    - cd ios && pod install && cd ..
+  script:
+    - fastlane beta
+  only:
+    - tags
+  when: manual
+
+# Deploy to Google Play (Android)
+deploy:android:play:
+  stage: deploy
+  image: openjdk:17-jdk-slim
+  before_script:
+    - apt-get update && apt-get install -y wget unzip git
+    - export ANDROID_HOME=/opt/android-sdk
+    - export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+    - curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | bash -
+    - apt-get install -y nodejs
+    - npm ci
+  script:
+    - cd android
+    - ./gradlew bundleRelease
+    - fastlane android beta
+  only:
+    - tags
+  when: manual
+
+# Security scan
+security:scan:
+  stage: test
+  image: node:${NODE_VERSION}-alpine
+  script:
+    - npm ci
+    - npm audit --audit-level=moderate
+    - npm run security:check
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+
+# Code quality
+code_quality:
+  stage: test
+  image: node:${NODE_VERSION}-alpine
+  script:
+    - npm ci
+    - npm run lint
+    - npm run type-check
+  artifacts:
+    reports:
+      codequality: code-quality-report.json
+  only:
+    - merge_requests
+    - main
+
+

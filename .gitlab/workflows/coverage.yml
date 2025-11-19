@@ -1,0 +1,20 @@
+# GitLab Coverage Report
+coverage:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm test -- --coverage
+  coverage: '/Lines\s*:\s*(\d+\.\d+)%/'
+  artifacts:
+    reports:
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+  only:
+    - merge_requests
+    - main
+  tags:
+    - coverage
+
+

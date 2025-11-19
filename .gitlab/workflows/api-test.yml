@@ -1,0 +1,18 @@
+# GitLab API Testing
+api-test:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run test:api
+    - npm run api:report
+  artifacts:
+    reports:
+      api: api-test-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - api
+
+

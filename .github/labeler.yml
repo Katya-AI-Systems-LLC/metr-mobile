@@ -1,0 +1,76 @@
+# PR Labeler Configuration
+# https://github.com/actions/labeler
+
+# Platform labels
+'platform:ios':
+  - ios/**/*
+  - '*.xcodeproj'
+  - '*.xcworkspace'
+
+'platform:android':
+  - android/**/*
+  - '*.gradle'
+  - '*.apk'
+
+# Area labels
+'area:ai':
+  - app/ai/**/*
+  - '**/*ai*.ts'
+  - '**/*ai*.tsx'
+
+'area:web3':
+  - app/web3/**/*
+  - contracts/**/*
+  - '**/*blockchain*.ts'
+
+'area:ar-vr':
+  - app/ar/**/*
+  - app/vr/**/*
+  - '**/*ar*.ts'
+  - '**/*vr*.ts'
+
+'area:quantum':
+  - app/quantum/**/*
+  - '**/*quantum*.ts'
+
+'area:security':
+  - app/security/**/*
+  - '**/*security*.ts'
+  - '**/*encryption*.ts'
+
+'area:ui':
+  - app/components/**/*
+  - app/ui/**/*
+  - '**/*.tsx'
+
+'area:docs':
+  - docs/**/*
+  - '*.md'
+  - '**/*.md'
+
+'area:ci-cd':
+  - '.github/workflows/**/*'
+  - '.gitlab-ci.yml'
+  - 'Jenkinsfile'
+  - '.drone.yml'
+
+# Type labels
+'type:bug':
+  - '**/*bug*.ts'
+  - '**/*fix*.ts'
+
+'type:feature':
+  - '**/*feature*.ts'
+  - '**/*add*.ts'
+
+'type:refactor':
+  - '**/*refactor*.ts'
+  - '**/*cleanup*.ts'
+
+'type:test':
+  - '__tests__/**/*'
+  - '**/*.test.ts'
+  - '**/*.test.tsx'
+  - '**/*.spec.ts'
+
+

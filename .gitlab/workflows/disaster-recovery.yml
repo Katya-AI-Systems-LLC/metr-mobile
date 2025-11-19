@@ -1,0 +1,13 @@
+# GitLab Disaster Recovery
+disaster-recovery:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - ./scripts/disaster-recovery.sh
+  only:
+    - schedules
+  when: manual
+  tags:
+    - disaster-recovery
+
+

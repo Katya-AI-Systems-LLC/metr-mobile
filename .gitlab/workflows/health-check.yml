@@ -1,0 +1,12 @@
+# GitLab Health Check
+health-check:
+  stage: deploy
+  image: curlimages/curl:latest
+  script:
+    - curl -f $HEALTH_CHECK_URL || exit 1
+  only:
+    - main
+  tags:
+    - production
+
+

@@ -1,0 +1,14 @@
+# GitLab Feature Flags Management
+feature-flags:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run feature-flags:sync
+    - npm run feature-flags:verify
+  only:
+    - main
+  tags:
+    - feature-flags
+
+

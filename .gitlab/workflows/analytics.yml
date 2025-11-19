@@ -1,0 +1,14 @@
+# GitLab Analytics Setup
+analytics:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run analytics:setup
+    - npm run analytics:verify
+  only:
+    - main
+  tags:
+    - analytics
+
+

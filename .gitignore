@@ -1,14 +1,25 @@
+# METR Specific
 assets/override
 dist
 build-ios
 *.zip
 server.PID
+metr.keystore
 mattermost.keystore
 tmp/
 .env
+.env.local
+.env.development
+.env.production
 env.d.ts
 
 */**/compass-icons.ttf
+
+# METR Debug APK
+metr-debug.apk
+*.apk
+*.aab
+*.ipa
 
 # OSX
 #

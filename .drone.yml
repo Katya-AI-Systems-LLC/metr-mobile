@@ -1,0 +1,84 @@
+---
+kind: pipeline
+type: docker
+name: lint
+
+steps:
+  - name: lint
+    image: node:18-alpine
+    commands:
+      - npm ci
+      - npm run lint
+      - npm run type-check
+
+trigger:
+  branch:
+    - main
+    - develop
+  event:
+    - push
+    - pull_request
+
+---
+kind: pipeline
+type: docker
+name: test
+
+steps:
+  - name: test
+    image: node:18-alpine
+    commands:
+      - npm ci
+      - npm test -- --coverage
+
+trigger:
+  branch:
+    - main
+    - develop
+  event:
+    - push
+    - pull_request
+
+---
+kind: pipeline
+type: docker
+name: build-android
+
+depends_on:
+  - lint
+  - test
+
+steps:
+  - name: build
+    image: openjdk:17-jdk-slim
+    commands:
+      - apt-get update && apt-get install -y wget unzip git curl
+      - export ANDROID_HOME=/opt/android-sdk
+      - export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+      - |
+        if [ ! -d "$ANDROID_HOME" ]; then
+          mkdir -p $ANDROID_HOME
+          wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+          unzip commandlinetools-linux-9477386_latest.zip -d $ANDROID_HOME/cmdline-tools
+          rm commandlinetools-linux-9477386_latest.zip
+          yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --licenses
+        fi
+      - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+      - apt-get install -y nodejs
+      - npm ci
+      - cd android && ./gradlew assembleDebug
+    when:
+      branch:
+        - main
+        - develop
+      event:
+        - push
+
+trigger:
+  branch:
+    - main
+    - develop
+  event:
+    - push
+
+

@@ -1,0 +1,18 @@
+# GitLab Penetration Testing
+penetration-test:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run pentest:run
+    - npm run pentest:report
+  artifacts:
+    reports:
+      penetration: pentest-report.json
+  only:
+    - schedules
+  when: manual
+  tags:
+    - security
+
+

@@ -1,0 +1,14 @@
+# GitLab Smoke Testing
+smoke-test:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run test:smoke
+  only:
+    - merge_requests
+    - main
+  tags:
+    - smoke
+
+

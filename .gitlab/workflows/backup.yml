@@ -1,0 +1,19 @@
+# GitLab Backup Workflow
+backup:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - apk add --no-cache postgresql-client
+    - pg_dump $DATABASE_URL > backup.sql
+    - gzip backup.sql
+  artifacts:
+    paths:
+      - backup.sql.gz
+    expire_in: 1 week
+  only:
+    - schedules
+  when: manual
+  tags:
+    - backup
+
+

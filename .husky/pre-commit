@@ -1,4 +1,18 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
 
-sh ./scripts/pre-commit.sh
+# Run lint-staged
+npm run lint-staged
+
+# Check for secrets
+if git diff --cached | grep -E "(password|secret|api_key|private_key)" > /dev/null; then
+  echo "❌ Error: Potential secrets detected in staged files!"
+  echo "Please remove secrets before committing."
+  exit 1
+fi
+
+# Check for console.logs (optional)
+if git diff --cached | grep -E "console\.(log|debug|info)" > /dev/null; then
+  echo "⚠️  Warning: console.log statements detected."
+  echo "Consider removing them before committing."
+fi

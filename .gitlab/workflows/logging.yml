@@ -1,0 +1,14 @@
+# GitLab Logging Setup
+logging:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run logging:setup
+    - npm run logging:verify
+  only:
+    - main
+  tags:
+    - logging
+
+

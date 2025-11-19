@@ -1,0 +1,18 @@
+# GitLab Post-Mortem Automation
+post-mortem:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run post-mortem:generate
+    - npm run post-mortem:notify
+  artifacts:
+    paths:
+      - post-mortem.md
+  only:
+    - main
+  when: manual
+  tags:
+    - post-mortem
+
+

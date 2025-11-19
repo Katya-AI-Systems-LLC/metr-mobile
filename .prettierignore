@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build outputs
+build/
+dist/
+*.apk
+*.ipa
+*.aab
+
+# iOS
+ios/Pods/
+ios/build/
+*.xcworkspace
+*.xcodeproj
+
+# Android
+android/app/build/
+android/.gradle/
+android/local.properties
+
+# Logs
+*.log
+npm-debug.log*
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Environment
+.env
+.env.local
+
+# Generated files
+*.generated.*
+
+# Assets
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.svg
+*.ico
+*.ttf
+*.otf
+*.woff
+*.woff2
+
+# Documentation build
+docs/_build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+

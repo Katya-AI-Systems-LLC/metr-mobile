@@ -1,0 +1,18 @@
+# GitLab Compliance Check
+compliance-check:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run compliance:check
+    - npm run compliance:report
+  artifacts:
+    reports:
+      compliance: compliance-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - compliance
+
+

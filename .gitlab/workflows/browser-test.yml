@@ -1,0 +1,21 @@
+# GitLab Browser Testing
+browser-test:
+  stage: test
+  image: node:18-alpine
+  services:
+    - selenium/standalone-chrome:latest
+  script:
+    - npm ci
+    - npm run test:e2e
+  artifacts:
+    when: always
+    paths:
+      - screenshots/
+      - videos/
+  only:
+    - merge_requests
+    - main
+  tags:
+    - browser
+
+

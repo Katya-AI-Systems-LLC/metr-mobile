@@ -1,0 +1,12 @@
+# GitLab Container Scanning Workflow
+include:
+  - template: Security/Container-Scanning.gitlab-ci.yml
+
+container_scanning:
+  stage: test
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+
+

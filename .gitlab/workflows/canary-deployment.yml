@@ -1,0 +1,13 @@
+# GitLab Canary Deployment
+canary-deployment:
+  stage: deploy
+  image: alpine:latest
+  script:
+    - ./scripts/canary-deploy.sh
+  only:
+    - main
+  when: manual
+  tags:
+    - canary
+
+

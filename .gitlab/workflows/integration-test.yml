@@ -1,0 +1,21 @@
+# GitLab Integration Testing
+integration-test:
+  stage: test
+  image: node:18-alpine
+  services:
+    - postgres:latest
+    - redis:latest
+  script:
+    - npm ci
+    - npm run test:integration
+    - npm run integration:report
+  artifacts:
+    reports:
+      integration: integration-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - integration
+
+

@@ -1,0 +1,45 @@
+# Code Quality Workflow
+name: Code Quality
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run ESLint
+        run: npm run lint
+      
+      - name: Run TypeScript check
+        run: npm run type-check
+      
+      - name: Run Prettier check
+        run: npx prettier --check "**/*.{ts,tsx,json,md}"
+      
+      - name: Check code complexity
+        run: npx complexity-report --format json src/ > complexity-report.json || true
+      
+      - name: Upload complexity report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: complexity-report
+          path: complexity-report.json
+
+

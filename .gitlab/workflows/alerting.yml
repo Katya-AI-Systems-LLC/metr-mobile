@@ -1,0 +1,14 @@
+# GitLab Alerting Setup
+alerting:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run alerting:setup
+    - npm run alerting:test
+  only:
+    - main
+  tags:
+    - alerting
+
+

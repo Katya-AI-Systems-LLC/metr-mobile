@@ -1,0 +1,12 @@
+# GitLab Dependency Scanning Workflow
+include:
+  - template: Security/Dependency-Scanning.gitlab-ci.yml
+
+dependency_scanning:
+  stage: test
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+
+

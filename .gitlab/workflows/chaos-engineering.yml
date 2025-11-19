@@ -1,0 +1,18 @@
+# GitLab Chaos Engineering Tests
+chaos-test:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run test:chaos
+    - npm run chaos:report
+  artifacts:
+    reports:
+      chaos: chaos-report.json
+  only:
+    - main
+  when: manual
+  tags:
+    - chaos
+
+

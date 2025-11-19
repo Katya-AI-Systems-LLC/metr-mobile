@@ -1,0 +1,14 @@
+# GitLab Chaos Monkey
+chaos-monkey:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run chaos:monkey
+  only:
+    - schedules
+  when: manual
+  tags:
+    - chaos
+
+

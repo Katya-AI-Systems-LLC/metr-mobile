@@ -1,0 +1,120 @@
+# Bitbucket Pipelines Configuration for METR
+# https://support.atlassian.com/bitbucket-cloud/docs/get-started-with-bitbucket-pipelines/
+
+image: node:18
+
+definitions:
+  caches:
+    node-modules: node_modules
+    gradle: android/.gradle
+    pods: ios/Pods
+
+  steps:
+    - step: &lint
+        name: Lint and Type Check
+        caches:
+          - node-modules
+        script:
+          - npm ci
+          - npm run lint
+          - npm run type-check
+
+    - step: &test
+        name: Run Tests
+        caches:
+          - node-modules
+        script:
+          - npm ci
+          - npm test -- --coverage
+        after-script:
+          - npm run test:coverage-report
+
+    - step: &build-android-debug
+        name: Build Android Debug
+        image: openjdk:17
+        caches:
+          - node-modules
+          - gradle
+        script:
+          - apt-get update && apt-get install -y wget unzip
+          - export ANDROID_HOME=/opt/android-sdk
+          - export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+          - |
+            if [ ! -d "$ANDROID_HOME" ]; then
+              mkdir -p $ANDROID_HOME
+              wget -q https://dl.google.com/android/repository/commandlinetools-linux-9477386_latest.zip
+              unzip commandlinetools-linux-9477386_latest.zip -d $ANDROID_HOME/cmdline-tools
+              rm commandlinetools-linux-9477386_latest.zip
+              yes | $ANDROID_HOME/cmdline-tools/bin/sdkmanager --licenses
+            fi
+          - curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+          - apt-get install -y nodejs
+          - npm ci
+          - cd android && ./gradlew assembleDebug
+        artifacts:
+          - android/app/build/outputs/apk/debug/app-debug.apk
+
+    - step: &build-ios
+        name: Build iOS
+        image: atlassian/default-image:3
+        os: linux
+        script:
+          - echo "iOS builds require macOS runners"
+          - echo "Use Bitbucket Cloud macOS runners or external CI"
+
+pipelines:
+  default:
+    - step: *lint
+    - step: *test
+
+  branches:
+    main:
+      - step: *lint
+      - step: *test
+      - step: *build-android-debug
+      - step:
+          name: Deploy to Staging
+          deployment: staging
+          script:
+            - echo "Deploy to staging environment"
+
+  tags:
+    'v*':
+      - step: *lint
+      - step: *test
+      - step: *build-android-debug
+      - step:
+          name: Build Release
+          script:
+            - cd android && ./gradlew assembleRelease
+          artifacts:
+            - android/app/build/outputs/apk/release/app-release.apk
+      - step:
+          name: Deploy to Production
+          deployment: production
+          script:
+            - echo "Deploy to production"
+
+  pull-requests:
+    '**':
+      - step: *lint
+      - step: *test
+
+  custom:
+    security-scan:
+      - step:
+          name: Security Scan
+          script:
+            - npm ci
+            - npm audit
+            - npm run security:check
+
+    dependency-check:
+      - step:
+          name: Check Dependencies
+          script:
+            - npm ci
+            - npm outdated
+            - npm audit
+
+

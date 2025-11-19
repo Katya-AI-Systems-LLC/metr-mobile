@@ -1,0 +1,18 @@
+# GitLab Regression Testing
+regression-test:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run test:regression
+    - npm run regression:report
+  artifacts:
+    reports:
+      regression: regression-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - regression
+
+

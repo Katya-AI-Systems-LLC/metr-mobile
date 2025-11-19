@@ -1,0 +1,23 @@
+# GitLab End-to-End Testing
+e2e-test:
+  stage: test
+  image: node:18-alpine
+  services:
+    - selenium/standalone-chrome:latest
+  script:
+    - npm ci
+    - npm run test:e2e
+    - npm run e2e:report
+  artifacts:
+    when: always
+    paths:
+      - e2e-screenshots/
+      - e2e-videos/
+      - e2e-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - e2e
+
+

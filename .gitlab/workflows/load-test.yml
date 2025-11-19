@@ -1,0 +1,16 @@
+# GitLab Load Testing
+load-test:
+  stage: test
+  image: k6io/k6:latest
+  script:
+    - k6 run load-test.js
+  artifacts:
+    reports:
+      load_performance: load-test-results.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - performance
+
+

@@ -1,0 +1,14 @@
+# GitLab Error Tracking
+error-tracking:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run error-tracking:setup
+    - npm run error-tracking:verify
+  only:
+    - main
+  tags:
+    - error-tracking
+
+

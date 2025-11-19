@@ -1,0 +1,16 @@
+# GitLab Security Scanning Workflow
+security-scan:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm audit --audit-level=moderate
+    - npm run security:check
+  allow_failure: true
+  only:
+    - merge_requests
+    - main
+  tags:
+    - security
+
+

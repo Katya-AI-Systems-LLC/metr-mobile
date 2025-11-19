@@ -202,8 +202,18 @@
     "test": "jest --forceExit --runInBand",
     "test:coverage": "jest --coverage",
     "test:watch": "npm test -- --watch",
+    "test:performance": "jest --testPathPattern=performance",
     "tsc": "NODE_OPTIONS=--max_old_space_size=12000 tsc --noEmit",
-    "updatesnapshot": "jest --updateSnapshot"
+    "updatesnapshot": "jest --updateSnapshot",
+    "analyze:bundle": "node -e \"console.log('Run: bash scripts/analyze-bundle.sh or powershell scripts/analyze-bundle.ps1')\"",
+    "analyze:bundle:win": "powershell -ExecutionPolicy Bypass -File ./scripts/analyze-bundle.ps1",
+    "analyze:bundle:unix": "bash ./scripts/analyze-bundle.sh",
+    "optimize:assets": "node -e \"console.log('Run: bash scripts/optimize-assets.sh or powershell scripts/optimize-assets.ps1')\"",
+    "optimize:assets:win": "powershell -ExecutionPolicy Bypass -File ./scripts/optimize-assets.ps1",
+    "optimize:assets:unix": "bash ./scripts/optimize-assets.sh",
+    "check:performance": "node -e \"console.log('Run: bash scripts/check-performance.sh or powershell scripts/check-performance.ps1')\"",
+    "check:performance:win": "powershell -ExecutionPolicy Bypass -File ./scripts/check-performance.ps1",
+    "check:performance:unix": "bash ./scripts/check-performance.sh"
   },
   "overrides": {
     "@nozbe/with-observables": {

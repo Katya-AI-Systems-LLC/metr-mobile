@@ -1,0 +1,14 @@
+# GitLab Performance Monitoring
+performance-monitoring:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run perf:monitor
+    - npm run perf:alert
+  only:
+    - main
+  tags:
+    - performance
+
+

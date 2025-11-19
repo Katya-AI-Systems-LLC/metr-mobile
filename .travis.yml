@@ -1,0 +1,48 @@
+# Travis CI Configuration for METR
+language: node_js
+node_js:
+  - "18"
+
+os:
+  - linux
+  - osx
+
+cache:
+  directories:
+    - node_modules
+    - android/.gradle
+    - ios/Pods
+
+before_install:
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      export ANDROID_HOME=$HOME/android-sdk;
+      export PATH=$PATH:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools;
+    fi
+
+install:
+  - npm ci
+  - if [ "$TRAVIS_OS_NAME" == "osx" ]; then
+      cd ios && pod install && cd ..;
+    fi
+
+script:
+  - npm run lint
+  - npm run type-check
+  - npm test
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then
+      cd android && ./gradlew assembleDebug;
+    fi
+
+notifications:
+  email:
+    recipients:
+      - devops@metr.app
+    on_success: never
+    on_failure: always
+
+branches:
+  only:
+    - main
+    - develop
+
+

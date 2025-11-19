@@ -1,0 +1,18 @@
+# GitLab Mutation Testing
+mutation-test:
+  stage: test
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run test:mutation
+    - npm run mutation:report
+  artifacts:
+    reports:
+      mutation: mutation-report.json
+  only:
+    - merge_requests
+    - main
+  tags:
+    - mutation
+
+

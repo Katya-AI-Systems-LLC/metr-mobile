@@ -1,0 +1,14 @@
+# GitLab Monitoring Setup
+monitoring:
+  stage: deploy
+  image: node:18-alpine
+  script:
+    - npm ci
+    - npm run monitoring:setup
+    - npm run monitoring:verify
+  only:
+    - main
+  tags:
+    - monitoring
+
+
