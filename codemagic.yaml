@@ -199,7 +199,13 @@ workflows:
           failure: true
       google_play:
         credentials: $GOOGLE_SERVICE_ACCOUNT_CREDENTIALS
-        track: $GOOGLE_PLAY_TRACK # or 'internal', 'alpha', 'beta', 'production'
+        # Track: Use one of: 'internal', 'alpha', 'beta', 'production'
+        # Option 1: Use direct value (recommended for now)
+        track: internal
+        # Option 2: Use environment variable from codemagic_android_credentials group
+        # If you set GOOGLE_PLAY_TRACK in codemagic_android_credentials group, 
+        # uncomment the line below and comment out the track: internal line above
+        # track: $GOOGLE_PLAY_TRACK
         submit_as_draft: true
 
   # Android Debug Build Workflow

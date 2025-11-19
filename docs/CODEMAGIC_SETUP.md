@@ -64,7 +64,8 @@ base64 your-keystore.jks | clip       # Windows
 
 ```
 GOOGLE_SERVICE_ACCOUNT_CREDENTIALS=<base64-encoded-json-key>
-GOOGLE_PLAY_TRACK=internal  # or 'alpha', 'beta', 'production'
+# Optional: GOOGLE_PLAY_TRACK (if not set, defaults to 'internal' in codemagic.yaml)
+# GOOGLE_PLAY_TRACK=internal  # or 'alpha', 'beta', 'production'
 ```
 
 **To get Google Play credentials:**
@@ -72,6 +73,10 @@ GOOGLE_PLAY_TRACK=internal  # or 'alpha', 'beta', 'production'
 2. Create a service account
 3. Download the JSON key file
 4. Encode it: `base64 -i service-account-key.json | pbcopy`
+
+**Note**: The `GOOGLE_PLAY_TRACK` variable is optional. By default, the workflow uses `internal` track. To change it:
+- **Option 1**: Edit `codemagic.yaml` and change `track: internal` to your desired track
+- **Option 2**: Set `GOOGLE_PLAY_TRACK` in the `codemagic_android_credentials` group and update the workflow to use `track: $GOOGLE_PLAY_TRACK`
 
 #### iOS Signing (`codemagic_ios`)
 
