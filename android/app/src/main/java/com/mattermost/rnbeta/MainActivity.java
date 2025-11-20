@@ -15,6 +15,9 @@ import com.facebook.react.ReactRootView;
 import com.reactnativenavigation.NavigationActivity;
 import com.github.emilioicai.hwkeyboardevent.HWKeyboardEventModule;
 
+import com.metr.app.BuildConfig;
+import com.metr.app.R;
+
 public class MainActivity extends NavigationActivity {
     private boolean HWKeyboardConnected = false;
 

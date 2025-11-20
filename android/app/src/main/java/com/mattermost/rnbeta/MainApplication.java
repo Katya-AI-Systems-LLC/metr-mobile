@@ -11,6 +11,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.metr.app.BuildConfig;
+
 import com.mattermost.helpers.RealPathUtil;
 import com.mattermost.share.ShareModule;
 import com.wix.reactnativenotifications.RNNotificationsPackage;

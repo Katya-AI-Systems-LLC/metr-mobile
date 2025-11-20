@@ -28,6 +28,8 @@ import androidx.core.app.Person;
 import androidx.core.app.RemoteInput;
 import androidx.core.graphics.drawable.IconCompat;
 
+import com.metr.app.R;
+
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.mattermost.rnbeta.*;
 
