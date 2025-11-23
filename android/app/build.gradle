@@ -80,6 +80,7 @@ project.ext.react = [
     bundleConfig: "metro.config.js",
     bundleCommand: "bundle",
     enableHermes: true,
+    bundleInDebug: false, // Set to true if you want to bundle JS in debug mode (requires rebuilding)
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
