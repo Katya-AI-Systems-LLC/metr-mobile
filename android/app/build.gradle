@@ -77,10 +77,11 @@ import org.apache.tools.ant.taskdefs.condition.Os
 
 project.ext.react = [
     entryFile: "index.ts",
+    bundleAssetName: "index.android.bundle",
     bundleConfig: "metro.config.js",
     bundleCommand: "bundle",
     enableHermes: true,
-    bundleInDebug: false, // Set to true if you want to bundle JS in debug mode (requires rebuilding)
+    bundleInDebug: true, // Bundle JS in debug mode so Metro isn't required
 ]
 
 apply from: "../../node_modules/react-native/react.gradle"
